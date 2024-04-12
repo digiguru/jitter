@@ -10,6 +10,7 @@ export class AudioControl {
         this.analyser = null;
         this.audioBuffer = null;
         this.isPlaying = false;
+        this.isUserInteracting = false;  // Flag to check user interaction
 
         this.setupEventListeners();
     }
@@ -26,12 +27,16 @@ export class AudioControl {
         });
 
         this.trackPosition.addEventListener('mousedown', () => {
+            console.log("MOUSE DOWN",  parseInt(this.trackPosition.value))
+            this.isUserInteracting = true;  // User starts interacting
             if (this.audioSource) {
                 this.stop();
             }
         });
 
         this.trackPosition.addEventListener('mouseup', () => {
+            console.log("MOUSE UP",  parseInt(this.trackPosition.value))
+            this.isUserInteracting = false;  // User stops interacting
             const seekTime = parseFloat(this.trackPosition.value);
             this.createSourceAndPlay(seekTime);
         });
@@ -40,12 +45,17 @@ export class AudioControl {
             this.currentTimeLabel.textContent = this.formatTime(parseFloat(this.trackPosition.value));
         });
     }
+
     stop() {
-        this.isPlaying = false;  // Update playing status when audio ends
-        this.audioSource.stop();
-        this.dispatchEvent(new CustomEvent('audioStopped'));
+        this.isPlaying = false;
+        if (this.audioSource) {
+            this.audioSource.stop(0);
+            this.dispatchEvent(new CustomEvent('audioStopped'));
+        }
     }
+
     createSourceAndPlay(offset) {
+        console.log("CREATESOURCEANDPLAY", offset)
         if (this.audioSource) {
             this.audioSource.disconnect();
         }
@@ -54,14 +64,10 @@ export class AudioControl {
         this.analyser = this.audioContext.createAnalyser();
         this.audioSource.connect(this.analyser);
         this.analyser.connect(this.audioContext.destination);
-        this.audioSource.onended = () => {
-            this.dispatchEvent(new CustomEvent('audioStopped (inner)'));
-            
-            //
-        };
+        this.audioSource.onended = () => this.dispatchEvent(new CustomEvent('audioStopped'));
         this.audioSource.start(0, offset);
-        this.dispatchEvent(new CustomEvent('audioStarted', { detail: { context: this.audioContext, analyser: this.analyser } }));
         this.isPlaying = true;
+        this.dispatchEvent(new CustomEvent('audioStarted', { detail: { context: this.audioContext, analyser: this.analyser } }));
         this.trackPosition.max = this.audioBuffer.duration;
         this.totalTimeLabel.textContent = this.formatTime(this.audioBuffer.duration);
         requestAnimationFrame(this.updateUI.bind(this));
@@ -70,22 +76,26 @@ export class AudioControl {
         document.dispatchEvent(event);
     }
     updateUI() {
-        if (this.audioSource) {
+        if (this.audioSource && !this.isUserInteracting) {
+            console.log("UPDATE UI", parseInt(this.audioContext.currentTime), parseInt(this.trackPosition.value))
             const currentTime = this.audioContext.currentTime;
             this.trackPosition.value = currentTime;
             this.currentTimeLabel.textContent = this.formatTime(currentTime);
             requestAnimationFrame(this.updateUI.bind(this));
         }
     }
-    getAnalyser() {
-        return this.analyser;
-    }
-    isAudioPlaying() {
-        return this.isPlaying;
-    }
+
     formatTime(seconds) {
         const minutes = Math.floor(seconds / 60);
         const secondsPart = Math.floor(seconds % 60);
         return `${minutes}:${secondsPart < 10 ? '0' : ''}${secondsPart}`;
+    }
+
+    getAnalyser() {
+        return this.analyser;
+    }
+
+    isAudioPlaying() {
+        return this.isPlaying;
     }
 }
