@@ -1,0 +1,118 @@
+/* General Style for the Page */
+body {
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+canvas {
+    position: absolute;
+}
+/* Canvas Styles */
+canvas {
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #555;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+    50% { box-shadow: 0 0 40px rgba(255, 255, 255, 0.8); }
+    100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+}
+
+/* Custom Slider */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #0575E6, #021B79);
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s ease-in-out;
+}
+
+input[type="range"]:hover,
+input[type="range"]:focus {
+    opacity: 1;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+}
+
+/* Buttons */
+button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Label and Checkboxes */
+label {
+    margin: 10px;
+    padding: 5px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+label:hover {
+    transform: scale(1.05);
+}
+
+/* Additional Styling for Controls */
+#controls {
+    margin: auto;
+    width: 90%;
+    text-align: center;
+}
+
+#controls input,
+#controls label {
+    vertical-align: middle;
+}
