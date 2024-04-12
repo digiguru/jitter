@@ -3,11 +3,17 @@ import { startAnimation } from './animationControl.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const audioControl = new AudioControl('audio-file', 'trackPosition', 'currentTime', 'totalTime');
-    const animationManager = startAnimation('canvas', audioControl.getAnalyser());
+    const animationManager = startAnimation('canvas');
 
     document.addEventListener('audioStarted', (e) => {
         console.log('Audio started', e.detail);
-        animationManager.start(e.detail.analyser);
+        animationManager.setAnalyser(e.detail.analyser);
+        
+        // You can now start animation or do other tasks
+    });
+    document.addEventListener('pluginLoaded', (e) => {
+        console.log('plugin loaded', e);
+        animationManager.start();
         // You can now start animation or do other tasks
     });
 
@@ -19,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Example condition to start animation
     document.getElementById('start-animation').addEventListener('click', () => {
         if (audioControl.isAudioPlaying()) {
-            animationManager.start(audioControl.getAnalyser());
+            animationManager.setAnalyser(audioControl.getAnalyser());
         }
     });
 });

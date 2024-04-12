@@ -12,7 +12,10 @@ pluginsConfig.forEach(plugin => {
 
     checkbox.addEventListener('change', async function() {
         if (this.checked) {
-            modules[plugin.id] = await loadModule(plugin);
+            if(!modules[plugin.id]) {
+                modules[plugin.id] = await loadModule(plugin);
+                document.dispatchEvent(new CustomEvent('pluginLoaded'));
+            }
         } else {
             modules[plugin.id].unloadUI();
             delete modules[plugin.id];
@@ -55,11 +58,14 @@ export function startAnimation(canvasId) {
         });
         animationFrameId = requestAnimationFrame(animate);
     }
-    function start(audioAnalyser) {
+    function setAnalyser(audioAnalyser) {
         analyser = audioAnalyser;
+        start();
+    }
+    function start() {
         //if (animationFrameId === null) {  // Prevent multiple invocations
         animationFrameId = requestAnimationFrame(animate);
         //}
     }
-    return { start };
+    return { start, setAnalyser };
 }

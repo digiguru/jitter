@@ -11,7 +11,8 @@ export class AudioControl {
         this.audioBuffer = null;
         this.isPlaying = false;
         this.isUserInteracting = false;  // Flag to check user interaction
-
+        this.lastSeekTime = 0;
+        this.startOffset = 0;
         this.setupEventListeners();
     }
 
@@ -54,33 +55,38 @@ export class AudioControl {
         }
     }
 
-    createSourceAndPlay(offset) {
-        console.log("CREATESOURCEANDPLAY", offset)
-        if (this.audioSource) {
-            this.audioSource.disconnect();
-        }
-        this.audioSource = this.audioContext.createBufferSource();
-        this.audioSource.buffer = this.audioBuffer;
-        this.analyser = this.audioContext.createAnalyser();
-        this.audioSource.connect(this.analyser);
-        this.analyser.connect(this.audioContext.destination);
-        this.audioSource.onended = () => this.dispatchEvent(new CustomEvent('audioStopped'));
-        this.audioSource.start(0, offset);
-        this.isPlaying = true;
-        this.dispatchEvent(new CustomEvent('audioStarted', { detail: { context: this.audioContext, analyser: this.analyser } }));
-        this.trackPosition.max = this.audioBuffer.duration;
-        this.totalTimeLabel.textContent = this.formatTime(this.audioBuffer.duration);
-        requestAnimationFrame(this.updateUI.bind(this));
+ 
+
+createSourceAndPlay(offset) {
+    if (this.audioSource) {
+        this.audioSource.disconnect();
     }
+    this.audioSource = this.audioContext.createBufferSource();
+    this.audioSource.buffer = this.audioBuffer;
+    this.analyser = this.audioContext.createAnalyser();
+    this.audioSource.connect(this.analyser);
+    this.analyser.connect(this.audioContext.destination);
+    this.audioSource.start(0, offset);
+    this.startOffset = offset;
+    this.lastSeekTime = this.audioContext.currentTime;  // Record the time we started playback from the new offset
+    this.isPlaying = true;
+    this.dispatchEvent(new CustomEvent('audioStarted', { detail: { context: this.audioContext, analyser: this.analyser } }));
+    this.trackPosition.max = this.audioBuffer.duration;
+    this.totalTimeLabel.textContent = this.formatTime(this.audioBuffer.duration);
+    requestAnimationFrame(this.updateUI.bind(this));
+}
+
+
     dispatchEvent(event) {
         document.dispatchEvent(event);
     }
     updateUI() {
         if (this.audioSource && !this.isUserInteracting) {
-            console.log("UPDATE UI", parseInt(this.audioContext.currentTime), parseInt(this.trackPosition.value))
-            const currentTime = this.audioContext.currentTime;
+            // Calculate the current playback time based on the last seek
+            const currentTime = this.audioContext.currentTime - this.lastSeekTime + this.startOffset;
             this.trackPosition.value = currentTime;
             this.currentTimeLabel.textContent = this.formatTime(currentTime);
+            console.log("UPDATE UI", parseInt(currentTime), parseInt(this.trackPosition.value));
             requestAnimationFrame(this.updateUI.bind(this));
         }
     }
