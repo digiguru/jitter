@@ -14,8 +14,53 @@ export class AudioControl {
         this.lastSeekTime = 0;
         this.startOffset = 0;
         this.setupEventListeners();
+
+        this.playPauseButton = document.getElementById('playPauseBtn');
+        this.playPauseIcon = document.getElementById('playPauseIcon');
+        this.setupPlayPauseButton();
+    }
+    setupPlayPauseButton() {
+        this.playPauseButton.addEventListener('click', () => {
+            if (this.isPlaying) {
+                this.pause();
+            } else {
+                this.play();
+            }
+        });
+    }
+    play() {
+        console.log("PLAY")
+        if (!this.audioSource) {
+            return; // Check if source is available
+        }
+        this.audioSource.start();
+        this.isPlaying = true;
+        this.updatePlayPauseButton();
     }
 
+    pause() {
+        console.log("PAUSE")
+        if (this.audioSource) {
+            this.audioSource.stop();
+        }
+        this.isPlaying = false;
+        this.updatePlayPauseButton();
+    }
+
+    updatePlayPauseButton() {
+        if (this.isPlaying) {
+            this.playPauseIcon.className = "fas fa-pause";
+        } else {
+            this.playPauseIcon.className = "fas fa-play";
+        }
+        this.playPauseButton.disabled = !this.audioBuffer; // Disable if no audio is loaded
+    }
+
+    loadAudio(file) {
+        // Audio loading logic
+        this.audioBuffer = true; // Simulate loaded buffer
+        this.updatePlayPauseButton();
+    }
     setupEventListeners() {
         this.audioInput.addEventListener('change', async (event) => {
             if (!this.audioContext) {
@@ -74,6 +119,7 @@ createSourceAndPlay(offset) {
     this.trackPosition.max = this.audioBuffer.duration;
     this.totalTimeLabel.textContent = this.formatTime(this.audioBuffer.duration);
     requestAnimationFrame(this.updateUI.bind(this));
+    this.updatePlayPauseButton();
 }
 
 
