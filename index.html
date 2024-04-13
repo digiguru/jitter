@@ -4,22 +4,41 @@
 <meta charset="UTF-8">
 <title>Dynamic Audio Visualizer</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
-    <h1>Options</h1>
-    <div id="controls">
+    <div id="container">
+        <div id="controls">
+            <h1>Options</h1>
+   
 
 
-        <label>Track Position: <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span></label>
-        <input type="range" id="trackPosition" value="0" min="0" max="100" step="1">
+            <label>Track Position: <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span></label>
+            <input type="range" id="trackPosition" value="0" min="0" max="100" step="1">
+            <button id="playPauseBtn" class="play-pause-btn" disabled>
+                <i id="playPauseIcon" class="fas fa-play"></i> <!-- Using Font Awesome icons -->
+            </button>
+            <input type="file" id="audio-file" accept=".mp3">
 
+        </div>
+    <div id="canvas-container">
+        <h1>Output</h1>
+        <button id="start-animation">Start</button>
+        <canvas id="canvas"></canvas>
     </div>
-<input type="file" id="audio-file" accept=".mp3">
-<h1>Output</h1>
-<button id="start-animation">Start</button>
-<canvas id="canvas"></canvas>
-
+</div>
+    
 <script src="pluginsConfig.js"></script>
 <script type="module" src="main.js"></script>
 </body>
 </html>
+
+<div id="container">
+    <div id="controls" class="options">
+        <!-- Your options and controls go here -->
+    </div>
+    <div id="canvas-container">
+        <canvas id="canvas"></canvas>
+        <!-- Any additional content for the canvas area -->
+    </div>
+</div>

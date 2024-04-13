@@ -1,30 +1,53 @@
 /* General Style for the Page */
 body {
-    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    background: linear-gradient(to bottom right, #5e4c5f 0%, #5e4c5f 40%, #333333 70%, #333333 100%);
+    background-repeat: no-repeat; /* This will prevent the background from repeating */
+    background-attachment: fixed; /* This will fix the background with respect to the viewport */
+    background-size: cover; /* This will make sure the gradient covers the entire element */
     color: #fff;
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 20px;
-    overflow-x: hidden;
 }
-
 h1 {
-    text-align: center;
+    text-align: left;
     font-size: 2em;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 20px;
+    margin-left: 20px;
+    color: #fff;
 }
-canvas {
-    position: absolute;
+/* Use Flexbox to create a row with two columns */
+#container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh; /* Adjust height as needed */
 }
-/* Canvas Styles */
+
+#controls {
+    width: 30%; /* Set controls to take up 30% of the page */
+    padding: 20px;
+}
+
+#canvas-container {
+    width: 70%; /* Set canvas to take up 70% of the page */
+    padding: 20px;
+}
+
+
+/* Style for left-aligned options */
+.options {
+    text-align: left;
+}
 canvas {
     display: block;
     margin: 20px auto;
     border: 1px solid #555;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
     animation: pulse 2s infinite;
+    width: 100%; /* Set canvas to fill its container */
+    height: auto; /* Adjust height as needed, or set a fixed height */
+    max-height: 100%; /* Optional: to ensure it doesn't overflow its container */
 }
 
 @keyframes pulse {
@@ -39,12 +62,13 @@ input[type="range"] {
     width: 100%;
     height: 8px;
     border-radius: 5px;
-    background: linear-gradient(to right, #0575E6, #021B79);
     outline: none;
     opacity: 0.7;
     transition: opacity .2s ease-in-out;
+    background-color: #08AEEA;
+    background-image: linear-gradient(0deg, #08AEEA 0%, #2AF598 100%);
+    /* Rest of the styles */
 }
-
 input[type="range"]:hover,
 input[type="range"]:focus {
     opacity: 1;
@@ -69,9 +93,10 @@ input[type="range"]::-moz-range-thumb {
     cursor: pointer;
 }
 
-/* Buttons */
+
 button {
-    background-color: #4CAF50;
+    background-color: #08AEEA;
+    background-image: linear-gradient(0deg, #08AEEA 0%, #2AF598 100%);
     border: none;
     color: white;
     padding: 10px 20px;
@@ -86,7 +111,7 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-image: linear-gradient(0deg, #2AF598 0%, #08AEEA 100%);
 }
 
 /* Label and Checkboxes */
@@ -105,14 +130,36 @@ label:hover {
     transform: scale(1.05);
 }
 
-/* Additional Styling for Controls */
+
 #controls {
     margin: auto;
-    width: 90%;
-    text-align: center;
+    text-align: left; /* Change to left align for the controls */
+    padding-left: 20px; /* Add padding to align with the h1 if desired */
 }
+
 
 #controls input,
 #controls label {
     vertical-align: middle;
+}
+
+.play-pause-btn {
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.play-pause-btn:disabled {
+    background-color: #ccc;
+    cursor: default;
 }
