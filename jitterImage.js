@@ -25,9 +25,10 @@ const jitterImage = {
         }
     },
     draw: function(ctx, frequencyData) {
+        let multiplier = 1;
         let sum = frequencyData.reduce((a, b) => a + b, 0);
         let average = sum / frequencyData.length;
-        let scale = 1 + average / 512;
+        let scale = (1 + average / 512) * multiplier;
         ctx.save();
         ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2);
         ctx.scale(scale, scale);

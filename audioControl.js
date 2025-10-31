@@ -146,11 +146,12 @@ export class AudioControl {
 
     updateUI() {
         //console.log(this.audioSource, this.isPlaying, !this.isUserInteracting)
+        console.log(`UPDATE UI with ForcePosition: ${this.forcePosition} Duration: ${parseInt(this.audioBuffer.duration)} currentTime: ${parseInt(currentTime)} CurrTime: ${parseInt(this.audioContext.currentTime)} LastPlayTime ${parseInt(this.lastPlayTime)} StartOffset ${parseInt(this.startOffset)} Range Value: ${this.trackPosition.value}`);
         if (this.audioSource && this.isPlaying && !this.isUserInteracting) {
             const currentTime = this.audioContext.currentTime - this.lastPlayTime + this.startOffset;
             //const currentTime = this.audioContext.currentTime + this.startOffset;
             //const currentTime = this.startOffset;
-            let rangePosition = currentTime// this.audioContext.currentTime + this.startOffset;
+            let rangePosition = currentTime;// this.audioContext.currentTime + this.startOffset;
             if(this.forcePosition) {
                 rangePosition = this.audioContext.currentTime + this.startOffset;
                 this.forcePosition = false;
@@ -158,10 +159,15 @@ export class AudioControl {
             this.trackPosition.value = rangePosition;
             this.currentTimeLabel.textContent = this.formatTime(rangePosition);
             this.startOffset = this.trackPosition.value;
-            console.log("UPDATE UI", parseInt(currentTime), parseInt(this.audioContext.currentTime), parseInt(this.trackPosition.value), parseInt(this.startOffset));
-            
+            if(rangePosition >= this.audioBuffer.duration) {
+                console.log("END OF STREAM", rangePosition, this.audioBuffer.duration);
+                //this.pause();
+                //this.lastPlayTime = 0;
+            //    this.stop();
+            } 
+            requestAnimationFrame(this.updateUI.bind(this));
         }
-        requestAnimationFrame(this.updateUI.bind(this));
+       
     }
 
     updatePlayPauseButton() {
