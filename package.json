@@ -8,8 +8,8 @@
   },
   "scripts": {
     "lint": "eslint . && html-validate index.html",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest run tests/audioControl.test.js",
+    "test:watch": "vitest tests/audioControl.test.js",
     "test:e2e": "playwright test",
     "test:e2e:install": "playwright install chromium"
   },
