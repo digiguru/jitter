@@ -1,0 +1,23 @@
+{
+  "name": "jitter-audio-visualizer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "lint": "eslint . && html-validate index.html",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:install": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.0",
+    "eslint": "^10.7.0",
+    "html-validate": "^11.5.6",
+    "jsdom": "^30.0.1",
+    "vitest": "^4.1.10"
+  }
+}
