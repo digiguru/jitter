@@ -9,12 +9,16 @@ export default [
       sourceType: "module",
       globals: {
         AudioContext: "readonly",
+        Buffer: "readonly",
         CustomEvent: "readonly",
+        Event: "readonly",
+        EventTarget: "readonly",
         URL: "readonly",
         Uint8Array: "readonly",
         cancelAnimationFrame: "readonly",
         console: "readonly",
         document: "readonly",
+        process: "readonly",
         requestAnimationFrame: "readonly",
         window: "readonly"
       }
