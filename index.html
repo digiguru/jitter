@@ -1,44 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Dynamic Audio Visualizer</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Audio Visualizer</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="container">
-        <div id="controls">
-            <h1>Options</h1>
-   
-
-
-            <label>Track Position: <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span></label>
+    <main id="container">
+        <section id="controls" aria-labelledby="options-heading">
+            <h1 id="options-heading">Options</h1>
+            <label for="trackPosition">
+                Track Position: <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
+            </label>
             <input disabled type="range" id="trackPosition" value="0" min="0" max="100" step="1">
-            <button disabled id="playPauseBtn" class="play-pause-btn" disabled>
-                <i id="playPauseIcon" class="fas fa-play"></i> <!-- Using Font Awesome icons -->
-            </button>
-            <input type="file" id="audio-file" accept=".mp3">
+            <button disabled id="playPauseBtn" class="play-pause-btn" type="button" aria-label="Play audio">Play</button>
+            <label for="audio-file">Audio file</label>
+            <input type="file" id="audio-file" accept="audio/mpeg,.mp3">
+        </section>
 
-        </div>
-    <div id="canvas-container">
-        <h1>Output</h1>
-        <button id="start-animation">Start</button>
-        <canvas id="canvas"></canvas>
-    </div>
-</div>
-    
-<script src="pluginsConfig.js"></script>
-<script type="module" src="main.js"></script>
+        <section id="canvas-container" aria-labelledby="output-heading">
+            <h1 id="output-heading">Output</h1>
+            <button id="start-animation" type="button">Start</button>
+            <canvas id="canvas"></canvas>
+        </section>
+    </main>
+
+    <script type="module" src="main.js"></script>
 </body>
 </html>
-
-<div id="container">
-    <div id="controls" class="options">
-        <!-- Your options and controls go here -->
-    </div>
-    <div id="canvas-container">
-        <canvas id="canvas"></canvas>
-        <!-- Any additional content for the canvas area -->
-    </div>
-</div>
