@@ -14,6 +14,7 @@ export default [
         CustomEvent: "readonly",
         Event: "readonly",
         EventTarget: "readonly",
+        Image: "readonly",
         MediaRecorder: "readonly",
         MediaStream: "readonly",
         Promise: "readonly",
