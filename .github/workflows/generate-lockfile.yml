@@ -1,0 +1,38 @@
+name: Generate package lock
+
+on:
+  push:
+    branches:
+      - agent/add-ci-tests
+    paths:
+      - package.json
+      - .github/workflows/generate-lockfile.yml
+
+permissions:
+  contents: write
+
+jobs:
+  generate-lockfile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v7
+        with:
+          ref: agent/add-ci-tests
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Generate package-lock.json
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+
+      - name: Commit generated lockfile
+        uses: stefanzweifel/git-auto-commit-action@v7.2.0
+        with:
+          branch: agent/add-ci-tests
+          commit_message: Generate package lock
+          file_pattern: package-lock.json
