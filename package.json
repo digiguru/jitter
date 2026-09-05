@@ -16,7 +16,7 @@
   "devDependencies": {
     "@playwright/test": "^1.62.0",
     "eslint": "^10.9.1",
-    "html-validate": "^11.10.0",
+    "html-validate": "^11.12.0",
     "jsdom": "^30.0.1",
     "vitest": "^4.1.11"
   },
