@@ -19,5 +19,8 @@
     "html-validate": "^11.10.0",
     "jsdom": "^30.0.1",
     "vitest": "^4.1.11"
+  },
+  "overrides": {
+    "fast-uri": "3.1.7"
   }
 }
