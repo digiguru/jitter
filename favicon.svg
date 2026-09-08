@@ -9,10 +9,20 @@
       <stop offset="1" stop-color="#2AF598"/>
     </linearGradient>
   </defs>
-  <rect x="8" y="8" width="240" height="240" rx="48" fill="url(#bg)"/>
-  <circle cx="49" cy="126" r="10" fill="#8A73D9"/>
-  <rect x="69" y="99" width="18" height="55" rx="9" fill="#6E9EF4"/>
-  <rect x="101" y="78" width="20" height="97" rx="10" fill="#08AEEA"/>
-  <rect x="135" y="95" width="20" height="62" rx="10" fill="#11D8D0"/>
-  <path d="M178 111v54c0 19 14 33 33 33s33-14 33-33V79" fill="none" stroke="url(#wave)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="10" y="10" width="236" height="236" rx="48" fill="url(#bg)"/>
+
+  <!-- Waveform: deliberately centred and evenly spaced -->
+  <circle cx="44" cy="128" r="9" fill="#8870D8"/>
+  <rect x="63" y="108" width="16" height="40" rx="8" fill="#6C9BEF"/>
+  <rect x="91" y="83" width="18" height="90" rx="9" fill="#08AEEA"/>
+  <rect x="121" y="103" width="18" height="50" rx="9" fill="#14D5CF"/>
+
+  <!-- Final waveform stroke curls into a compact J -->
+  <path d="M167 109V157C167 181 181 196 202 196C223 196 232 180 232 158V94"
+        fill="none"
+        stroke="url(#wave)"
+        stroke-width="18"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
 </svg>
